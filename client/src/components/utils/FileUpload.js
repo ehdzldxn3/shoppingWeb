@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone'
 import {Icon, } from 'antd'
 import axios from 'axios'
 
-function FileUpload() {
+function FileUpload(props) {
 
 
   const [Image, setImage] = useState([])
@@ -21,7 +21,7 @@ function FileUpload() {
         if(res.data.success){
           
           setImage([...Image, res.data.filePath])
-          console.log(res.data)
+          props.refreshFunction([...Image, res.data.filePath])
         } else {
           alert('파일을 저장을 저장하는데 실패했습니다.')
         }
@@ -33,6 +33,7 @@ function FileUpload() {
     let newImg = [...Image]
     newImg.splice(currentIndex, 1)
     setImage(newImg)
+    props.refreshFunction(newImg)
   }
 
   return (
