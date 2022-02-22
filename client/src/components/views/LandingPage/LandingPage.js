@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import axios from 'axios'
-import {Icon, Col, Card, Row, Carousel } from 'antd'
+import {Icon, Col, Card, Row, } from 'antd'
 import ImgSlider from '../../utils/ImgSlider';
 import Meta from 'antd/lib/card/Meta';
+import CheckBox from './Sections/CheckBox'
+import {continents, } from './Sections/Datas';
+
 
 
 
@@ -11,7 +14,8 @@ function LandingPage() {
 
     const [Products, setProducts] = useState([])
     const [Skip, setSkip] = useState(0)
-    const [Limit, setLimit] = useState(4)
+    const [Limit, setLimit] = useState(8)
+    const [Postsize, setPostsize] = useState(0)
 
     useEffect(() => {
 
@@ -19,23 +23,21 @@ function LandingPage() {
             skip : Skip,
             limit : Limit,
         }
-
         getProducts(body)
-
-
     }, [])
 
     const getProducts = (body) => {
         axios.post('/api/product/products', body)
         .then(res => {
             if(res.data.success) {
-                
-                // if(body.loadMore) {
-                //     setProducts([...Products, ...res.data.productInfo] )
-                // } else {
-                //     setProducts(res.data.productInfo)
-                // }
-                
+                //더보기 버튼 설정
+                setPostsize(res.data.postSize)
+
+                if(body.loadMore) {
+                    setProducts([...Products, ...res.data.productInfo] )
+                } else {
+                    setProducts(res.data.productInfo)
+                }
             } else {
                 alert('상품을 가져오는 실패 했습니다.')
             }
@@ -59,8 +61,10 @@ function LandingPage() {
 
     const renderCards = Products.map((product, index) => {
         return (
-            <Col key={index} lg={6} md={8} xs={24} >
-                <Card
+            <Col key={index} lg={6} md={8} xs={24}
+                style={{paddingTop : '1rem'}}
+            >
+                <Card 
                     cover={<ImgSlider img={product.img} />}
                 >
                     <Meta
@@ -72,7 +76,9 @@ function LandingPage() {
         )
     })
 
-    
+    const handleFilters = () =>{
+
+    }
 
     return (
         <div style={{width: '75%', margin: '3rem auto'}}>
@@ -81,6 +87,11 @@ function LandingPage() {
             </div>
 
             {/* Filter */}
+
+            {/* CheckBox */}
+            <CheckBox list={continents} handleFilters={filter => handleFilters(filters, 'continents')}/>
+
+            {/* RadioBox */}
 
             {/* Search */}
 
@@ -91,11 +102,13 @@ function LandingPage() {
             
 
 
-
-            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '3rem'}}>
-                <button onClick={loadMoreHandler}>+</button>
-            </div>
+            {Postsize >= Limit &&
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '3rem' }}>
+                    <button onClick={loadMoreHandler}>+</button>
+                </div>
+            }
         </div>
+
     )
 }
 
