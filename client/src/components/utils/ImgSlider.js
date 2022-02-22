@@ -2,10 +2,9 @@ import React from 'react'
 import { Carousel, } from 'antd'
 
 function ImgSlider(props) {
-    console.log(props.img)
   return (
       <div>
-          <Carousel >
+          <Carousel autoplay>
               {props.img.map((img, index) => (
                   <div key={index}>
                     <img style={{width:'100%', maxHeight: '145px'}}

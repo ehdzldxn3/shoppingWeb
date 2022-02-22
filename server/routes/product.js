@@ -46,9 +46,16 @@ router.post("/", (req, res) => {
 
 
 router.post("/products", (req, res) => {
-    Product.find()
-        //작성자를 오브젝트 아이디로 했음 작성자의 모든 정보를 가져온다
+
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+    let limit = req.body.limit ? parseInt(req.body.limit) : 0;
+    console.log(skip)
+    console.log(limit)
+
+    Product.find(limit)
         .populate('writer') 
+        // .skip(skip)
+        // .limit(limit)
         .exec((err, productInfo) => {
             if(err) return res.status(400).json({success : false, err})
             return res.status(200).json({success : true, productInfo})
