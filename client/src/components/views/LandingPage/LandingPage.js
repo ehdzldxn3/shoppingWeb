@@ -16,6 +16,10 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
     const [Postsize, setPostsize] = useState(0)
+    const [Filters, setFilters] = useState({
+        continents: [],
+        price: [],
+    })
 
     useEffect(() => {
 
@@ -76,8 +80,23 @@ function LandingPage() {
         )
     })
 
-    const handleFilters = () =>{
+    const showFilteredResult = (filters) => {
 
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: filters
+        }
+        getProducts(body)
+        setSkip(0)
+    }
+
+    const handleFilters = (filters, category) =>{
+        const newFilters = {...Filters}
+
+        newFilters[category] = filters
+
+        showFilteredResult(newFilters)
     }
 
     return (
@@ -89,7 +108,7 @@ function LandingPage() {
             {/* Filter */}
 
             {/* CheckBox */}
-            <CheckBox list={continents} handleFilters={filter => handleFilters(filters, 'continents')}/>
+            <CheckBox list={continents} handleFilters={filters => handleFilters(filters, 'continents')}/>
 
             {/* RadioBox */}
 

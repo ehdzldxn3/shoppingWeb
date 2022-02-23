@@ -28,6 +28,12 @@ const productSchema = mongoose.Schema({
         type : Number,
         default : 0,
     },
+
+    continents : {
+        type : Number,
+        default : 1,
+    },
+
     views : {   //본 횟수
         type : Number,
         default: 0,
