@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
         cb(null, `${Date.now()}_${file.originalname}`)
     },
 })
+
 const upload = multer({storage : storage}).single('file')
 
 router.post("/image", (req, res) => {
@@ -58,9 +59,6 @@ router.post("/products", (req, res) => {
         }
     }
 
-    console.log('findArgs', findArgs)
-
-
     Product.find(findArgs)
         .populate('writer') 
         .skip(skip)
@@ -71,9 +69,5 @@ router.post("/products", (req, res) => {
                 success : true, productInfo, postSize: productInfo.length})
         })
 });
-
-
-
-
 
 module.exports = router;
