@@ -6,6 +6,7 @@ import ImgSlider from '../../utils/ImgSlider';
 import Meta from 'antd/lib/card/Meta';
 import CheckBox from './Sections/CheckBox'
 import RadioBox from './Sections/RadioBox'
+import SearchFeature from './Sections/SearchFeature'
 import {continents, price } from './Sections/Datas';
 
 
@@ -21,6 +22,8 @@ function LandingPage() {
         continents: [],
         price: [],
     })
+
+    const [SearchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
 
@@ -92,12 +95,46 @@ function LandingPage() {
         setSkip(0)
     }
 
+    const handlePrice = (value) => {
+        const data = price
+        let array = []
+
+        for (let key in data) {
+            if(data[key]._id === parseInt(value, 10)) {
+                array = data[key].array
+            }
+        }
+        return array
+    }
+
     const handleFilters = (filters, category) =>{
         const newFilters = {...Filters}
 
         newFilters[category] = filters
 
+        if(category === 'price') {
+            let priceValuse = handlePrice(filters)
+            newFilters[category] = priceValuse
+        }
+
         showFilteredResult(newFilters)
+        setFilters(newFilters)
+    }
+
+    const updateSearch = (newSearchTherm) => {
+        
+        let body ={
+            skip : 0,
+            limit : Limit,
+            filters : Filters,
+            searchTerm : newSearchTherm
+        }
+
+        setSkip(0)
+        setSearchTerm(newSearchTherm)
+        getProducts(body)
+
+
     }
 
     return (
@@ -107,6 +144,7 @@ function LandingPage() {
             </div>
 
             {/* Filter */}
+            
             <Row gutter={[16, 16]}>
                 <Col lg={12} xs={24}>
                     {/* CheckBox */}
@@ -123,12 +161,15 @@ function LandingPage() {
                     />
                 </Col>
             </Row>
-
-
-
             
 
             {/* Search */}
+            <div style={{display:'flex', justifyContent:'flex-end', margin:'1rem auto'}}>
+                <SearchFeature
+                    refresh={updateSearch}
+                />
+            </div>
+            
 
             {/* Card */}
             <Row gutter={16, 16}>
