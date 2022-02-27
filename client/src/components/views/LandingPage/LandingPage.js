@@ -73,7 +73,10 @@ function LandingPage() {
                 style={{paddingTop : '1rem'}}
             >
                 <Card 
-                    cover={<ImgSlider img={product.img} />}
+                    cover={
+                        <a href={`/product/${product._id}`}>
+                            <ImgSlider img={product.img}/>
+                        </a>}
                 >
                     <Meta
                         title={product.title}

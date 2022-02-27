@@ -94,11 +94,23 @@ router.post("/products", (req, res) => {
                     success: true, productInfo, postSize: productInfo.length
                 })
             })
-    }
-
-
-
-        
+    }    
 });
+
+
+
+
+router.get("/product_by_id", (req, res) => {
+    let type = req.query.type
+    let id = req.query.id
+
+    Product.find({_id : id})
+        .populate('writer')
+        .exec((err, product) => {
+            if(err) return res.status(400).send(err)
+            return res.status(200).send({success: true, product})
+        })
+});
+
 
 module.exports = router;
