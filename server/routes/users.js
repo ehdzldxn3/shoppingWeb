@@ -70,9 +70,12 @@ router.get("/logout", auth, (req, res) => {
 
 router.post("/addToCart", auth, (req, res) => {
 
+    console.log('진입')
     //User Collection에 해당 유저의 정보를 가져온다
-    User.findOne({_id: req.userId},
+    console.log(req.body.userId)
+    User.findOne({_id: req.body.userId},
         (err, userInfo) => {
+
             
             //가져온 정보에서 카트에 넣으려는 상품이 존재하는지 확인
             let duplicate = false

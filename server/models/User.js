@@ -32,11 +32,11 @@ const userSchema = mongoose.Schema({
     },
     cart : {
         type: Array,
-        default: []
+        default: [],
     },
     history : {
         type : [],
-        default: []
+        default: [],
 
     },
     tokenExp :{
