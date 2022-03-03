@@ -23,6 +23,7 @@ router.get("/auth", auth, (req, res) => {
 
 router.post("/register", (req, res) => {
 
+    //register 진입
     const user = new User(req.body);
 
     user.save((err, doc) => {
@@ -69,11 +70,9 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.post("/addToCart", auth, (req, res) => {
-
-    console.log('진입')
+    
     //User Collection에 해당 유저의 정보를 가져온다
-    console.log(req.body.userId)
-    User.findOne({_id: req.body.userId},
+    User.findOne({_id: req.body.productId},
         (err, userInfo) => {
 
             
