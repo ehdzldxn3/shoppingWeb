@@ -9,7 +9,7 @@ function ProductInfo(props) {
 
     //카트에 저장
     const clickHandler = () => {
-        console.log(props.detail._id);
+        
         dispatch(addToCart(props.detail._id))
 
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../_actions/user_actions";
 import { Formik } from 'formik';
@@ -20,11 +20,12 @@ function LoginPage(props) {
   };
 
   const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
-
+  const email  = initialEmail === 'undefined' ? '' : initialEmail
+  
   return (
     <Formik
       initialValues={{
-        email: initialEmail,
+        email: email,
         password: '',
       }}
       validationSchema={Yup.object().shape({
