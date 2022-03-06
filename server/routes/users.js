@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
+const { Product } = require("../models/Product");
 
 const { auth } = require("../middleware/auth");
 
@@ -18,6 +19,8 @@ router.get("/auth", auth, (req, res) => {
         lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image,
+        cart: req.user.cart,
+        history: req.user.history,
     });
 });
 
@@ -125,4 +128,39 @@ router.post("/addToCart", auth, (req, res) => {
         }) 
 });
 
+
+router.get("/removeFromCart", auth, (req, res) => {
+
+    //cart안에 데이터 지워주기
+    User.findOneAndUpdate(
+        {_id: req.user._id},
+        {
+            '$pull': 
+            {'cart' : {'id' : req.query.productId} }
+        },
+        {new : true},
+        (err, userInfo) => {
+            let cart = userInfo.cart;
+            let arr = cart.map(item => {
+                return item.id
+            })
+
+
+
+            //product collection에서 현재 남아있는 상품 정보 가져오기
+            Product.find({_id: {$in : arr}})
+            .populate('writer')
+            .exec((err, productInfo) => {
+                if(err) return res.status(400).send(err)
+                return res.status(200).send(productInfo, cart)
+            })
+
+        }
+    )
+
+
+    //product collection에 현재 남아있는 상품 정보 가져오기
+
+
+});
 module.exports = router;

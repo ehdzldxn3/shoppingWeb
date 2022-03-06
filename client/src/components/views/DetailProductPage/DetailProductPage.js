@@ -15,14 +15,10 @@ function DetailProductPage(props) {
     useEffect(()=> {
         axios.get(`/api/product/product_by_id?id=${productId}&type=single`)
             .then(res => {
-                if(res.data.success) {
-                    setProduct(res.data.product[0])
-                    
-                } else {
-                    alert('데이터 가져오는데 실패 했습니다.   ')
-                }
+                setProduct(res.data.product[0])
             })
-    },[])
+            .catch(err => alert(err))
+    },[productId])
 
   return (
       <div style={{ width: '100%', padding: '3rem 4rem' }}>
