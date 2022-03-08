@@ -54,6 +54,7 @@ function LoginPage(props) {
                 }
                 props.history.push("/");
               } else {
+                console.log(response.payload)
                 setFormErrorMessage('Check out your Account or Password again')
               }
             })

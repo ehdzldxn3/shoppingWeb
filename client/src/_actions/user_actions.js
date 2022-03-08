@@ -21,9 +21,11 @@ export function registerUser(dataToSubmit){
 }
 
 export function loginUser(dataToSubmit){
+
+    // const request = axios.get(`${USER_SERVER}/login`,dataToSubmit)
+    //             .then(response => response.data);
     const request = axios.get(`${USER_SERVER}/login`,dataToSubmit)
                 .then(response => response.data);
-
     return {
         type: GET_CART_ITEMS,
         payload: request
