@@ -25,7 +25,6 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    console.log(req.body)
     //register 진입
     const user = new User(req.body);
 
@@ -38,21 +37,17 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    console.log('진입')
     User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
-                message: "Auth failed, email not found"
+                message: "Auth failed, email not found",
             });
 
         user.comparePassword(req.body.password, (err, isMatch) => {
             
             if (!isMatch)
                 return res.json({ loginSuccess: false, message: "Wrong password" });
-
-                console.log(err)
-
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
                 res.cookie("w_authExp", user.tokenExp);
