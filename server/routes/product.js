@@ -113,13 +113,9 @@ router.get("/product_by_id", (req, res) => {
         })
     }
 
-    console.log(productIds)
-
     Product.find({_id : { $in: productIds} })
         .populate('writer')
         .exec((err, product) => {
-            console.log(err)
-            console.log(product)
             if(err) return res.status(400).send(err)
             return res.status(200).send(product)
         })

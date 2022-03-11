@@ -22,7 +22,8 @@ function ProductImage(props) {
 
 
   return (
-      <div style={{display: 'flex', justifyContent: 'center', border: '2px solid lightgray' }}>
+    //   <div style={{display: 'flex', justifyContent: 'center', border: '2px solid lightgray' }}>
+    <div style={{ justifyContent: 'center', border: '2px solid lightgray' }}>
           <ImageGallery items={Img} />
       </div>
   )

@@ -35,7 +35,7 @@ function CartPage(props) {
 
   const removeFromCart = (productId) => {
     dispatch(removeCartItem(productId))
-      .then(response => {console.log(response)})
+      .then(response => {})
   }
   
   return (

@@ -13,9 +13,10 @@ function DetailProductPage(props) {
     
 
     useEffect(()=> {
+        console.log()
         axios.get(`/api/product/product_by_id?id=${productId}&type=single`)
             .then(res => {
-                setProduct(res.data.product[0])
+                setProduct(res.data[0])
             })
             .catch(err => alert(err))
     },[productId])
@@ -29,7 +30,7 @@ function DetailProductPage(props) {
           <br />
 
 
-          <Row gutter={[16, 16]} style={{maxHeight:'100px'}}>
+          <Row gutter={[16, 16]} >
               <Col lg={12} sm={24}>
                   {/* Product */}
                   <ProductImage detail={Product}/>

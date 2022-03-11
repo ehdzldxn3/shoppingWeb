@@ -145,7 +145,6 @@ router.get("/removeFromCart", auth, (req, res) => {
             })
 
 
-
             //product collection에서 현재 남아있는 상품 정보 가져오기
             Product.find({_id: {$in : arr}})
             .populate('writer')
