@@ -128,8 +128,13 @@ router.post("/addToCart", auth, (req, res) => {
 });
 
 
-router.get("/removeFromCart", auth, (req, res) => {
-
+router.get('/removeFromCart', auth, (req, res) => {
+    console.log('')
+    console.log('')
+    console.log('removeFromCart 진입')
+    console.log('')
+    console.log('')
+    
     //cart안에 데이터 지워주기
     User.findOneAndUpdate(
         {_id: req.user._id},
@@ -140,17 +145,27 @@ router.get("/removeFromCart", auth, (req, res) => {
         {new : true},
         (err, userInfo) => {
             let cart = userInfo.cart;
-            let arr = cart.map(item => {
+            let array = cart.map(item => {
                 return item.id
             })
 
 
             //product collection에서 현재 남아있는 상품 정보 가져오기
-            Product.find({_id: {$in : arr}})
+            Product.find({_id: {$in : array}})
             .populate('writer')
             .exec((err, productInfo) => {
+                console.log('err')
+                console.log('err')
+                console.log('err')
+                console.log(err)
+                console.log('err')
+                console.log('err')
+                console.log('err')
                 if(err) return res.status(400).send(err)
-                return res.status(200).send(productInfo, cart)
+                return res.status(200).json({
+                    productInfo, 
+                    cart
+                })
             })
 
         }
@@ -158,7 +173,20 @@ router.get("/removeFromCart", auth, (req, res) => {
 
 
     //product collection에 현재 남아있는 상품 정보 가져오기
-
-
+    
 });
+
+
+
+router.get('/test', (req, res) => {
+
+    console.log(req.body.test)
+
+    const test = {
+        test : 1,
+        test2 : 2
+    }
+    res.status(200).json(test)
+});
+
 module.exports = router;

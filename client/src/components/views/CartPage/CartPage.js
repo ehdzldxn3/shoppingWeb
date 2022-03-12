@@ -33,9 +33,11 @@ function CartPage(props) {
     setTotal(total)
   }
 
-  const removeFromCart = (productId) => {
+  let removeFromCart = (productId) => {
     dispatch(removeCartItem(productId))
-      .then(response => {})
+      .then(response => {
+        
+      })
   }
   
   return (
@@ -44,7 +46,7 @@ function CartPage(props) {
       <h1>My Cart</h1>
       
       <div>
-        <UserCardBlock products={props.user.cartDetail} removeFromCart={removeFromCart}/>
+        <UserCardBlock products={props.user.cartDetail} removeItem={removeFromCart}/>
       </div>
       
       <div style={{marginTop:'3rem'}}>
