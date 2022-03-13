@@ -129,12 +129,7 @@ router.post("/addToCart", auth, (req, res) => {
 
 
 router.get('/removeFromCart', auth, (req, res) => {
-    console.log('')
-    console.log('')
-    console.log('removeFromCart 진입')
-    console.log('')
-    console.log('')
-    
+
     //cart안에 데이터 지워주기
     User.findOneAndUpdate(
         {_id: req.user._id},
@@ -154,13 +149,6 @@ router.get('/removeFromCart', auth, (req, res) => {
             Product.find({_id: {$in : array}})
             .populate('writer')
             .exec((err, productInfo) => {
-                console.log('err')
-                console.log('err')
-                console.log('err')
-                console.log(err)
-                console.log('err')
-                console.log('err')
-                console.log('err')
                 if(err) return res.status(400).send(err)
                 return res.status(200).json({
                     productInfo, 

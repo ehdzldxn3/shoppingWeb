@@ -97,13 +97,6 @@ export function removeCartItem(productId){
     const request = axios.get(`/api/users/removeFromCart?productId=${productId}`)
     .then(response => {
 
-        console.log('removeCartItem res')
-        console.log(response.data.cart)
-        console.log(response.data.productInfo)
-        console.log('')
-        console.log('')
-
-
         //productInfo, cart 정보를 조합해 CartDetail을 만든다
         response.data.cart.forEach(item => {
             response.data.productInfo.forEach((product, index) => {
@@ -114,7 +107,6 @@ export function removeCartItem(productId){
         })
         return response.data
     });
-
 
     return {
         type: REMOVE_CART_ITEM,
